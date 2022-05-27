@@ -13,6 +13,10 @@ if ( $session->startEnvertechSession() ) {
     //echo "\n-------------------------------------\n";
     //$apiSession = Portal::getModel('Envertech/ApiAccount_SessionUser');
     //var_dump( $apiSession->sendRequest() );
+
+    //echo "\n-------------------------------------\n";
+    //$stationId = Portal::getModel('Envertech/StationId');
+    //var_dump( $stationId->sendRequest() );
     
     //echo "\n-------------------------------------\n";
     //$gateways = Portal::getModel('Envertech/Gatways');
