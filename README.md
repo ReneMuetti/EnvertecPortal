@@ -3,7 +3,7 @@ Retrieve data of a PV plant from the EnvertecPortal and store locally
 
 /ApiStations/GetWayCount<br/>
 Model: Envertech/Gatways<br/>
-Bemerkung: Anzeige alle hinterlegten Gayways
+Bemerkung: Anzeige alle hinterlegten Gayways<br/>
 | Parameter | Richtung | Info |
 | --- | --- | --- |
 | stationId | Senden | 32 Stellen |
@@ -14,7 +14,7 @@ Bemerkung: Anzeige alle hinterlegten Gayways
 
 /ApiStations/GetDevices<br/>
 Model: Envertech/Devices<br/>
-Bemerkung: Abfrage der Wechselrichter eines 1-Phasen-Systems
+Bemerkung: Abfrage der Wechselrichter eines 1-Phasen-Systems<br/>
 | Parameter | Richtung | Info |
 | --- | --- | --- |
 | stationId | Senden | 32 Stellen |
@@ -29,7 +29,7 @@ Bemerkung: Abfrage der Wechselrichter eines 1-Phasen-Systems
 
 /ApiStations/GetDevicesABC<br/>
 Model: Envertech/Devices<br/>
-Bemerkung: Abfrage der Wechselrichter eines 3-Phasen-Systems
+Bemerkung: Abfrage der Wechselrichter eines 3-Phasen-Systems<br/>
 | Parameter | Richtung | single | three |
 | --- | --- | --- |
 | setPhaseMode | Model | 32 Stellen |
@@ -50,7 +50,7 @@ Bemerkung: Abfrage der Wechselrichter eines 3-Phasen-Systems
 
 /ApiStations/GetSunNavStationList<br/>
 Model: Envertech/Station<br/>
-Bemerkung: Bezeichner der eingetragenen Stations-Listen (nur für Envertec-Portal)
+Bemerkung: Bezeichner der eingetragenen Stations-Listen (nur für Envertec-Portal)<br/>
 | Parameter | Richtung | Info |
 | --- | --- | --- |
 | stationId | Senden | 32 Stellen |
@@ -63,7 +63,7 @@ Bemerkung: Bezeichner der eingetragenen Stations-Listen (nur für Envertec-Porta
 
 /ApiStations/getStationInfo<br/>
 Model: Envertech/StationInfo<br/>
-Bemerkung: Ermittelt alle aktuellen Daten der gewählten Station
+Bemerkung: Ermittelt alle aktuellen Daten der gewählten Station<br/>
 | Parameter | Richtung | Info |
 | --- | --- | --- |
 | stationId | Senden | 32 Stellen |
