@@ -9,6 +9,13 @@ class Envertech_StationId
     protected $_stationIdentifier;
     
     /**
+     * Default-Error for StationID nor found
+     *
+     * @var string
+     */
+    protected $_notFoundString = 'StationID not found!';
+    
+    /**
      * Constructor
      */
     public function __construct()
@@ -48,7 +55,7 @@ class Envertech_StationId
      */
     public function getCurrentStationId($code)
     {
-        $tmp = 'StationID notr found!';
+        $tmp = $this->_notFoundString;
         
         if ( !strlen($code) ) {
             return 'Error ' . __CLASS__ . '::' . __FUNCTION__ . ' (' . __LINE__ . ')';

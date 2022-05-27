@@ -38,11 +38,18 @@ class Http_Client
     private $_checkValifResponse = '"Status":"0"';
     
     /**
+     * Substring in Response while Session is failed
+     *
+     * @var string
+     */
+    protected $_errorString = 'Web.Config Configuration File';
+    
+    /**
      * Substring in Valid Response
      *
      * @var bool
      */
-    private $_lastResponseStrate;
+    private $_lastResponseState;
     
     /**
      * UserAgent for cUrl
@@ -61,6 +68,7 @@ class Http_Client
         $this->_config  = new Model_Config();
         
         $this->_userAgentString = 'Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:99.0) Gecko/20100101 Firefox/99.0';
+
     }
     
     /**
@@ -117,7 +125,7 @@ class Http_Client
     /**
      * send CURL-Request
      */
-    public function sendCurlRequest()
+    public function sendCurlRequest($checkResponse = true)
     {
         global $session;
         
@@ -153,13 +161,16 @@ class Http_Client
         
         $response = curl_exec($_curl);
         
-        $this->_checkvalidResponse($_curl, $response);
-        if ( $this->_lastResponseStrate === false ) {
-            curl_close($_curl);
+        if ( $checkResponse === true ) {
+            $this->_checkvalidResponse($_curl, $response);
+            
+            if ( $this->_lastResponseState === false ) {
+                curl_close($_curl);
 
-            $session = Portal::getModel('Envertech/Session');
-            $session->renewEnvertechSession();
-            $this->sendCurlRequest();
+                $session = Portal::getModel('Envertech/Session');
+                $session->renewEnvertechSession();
+                $this->sendCurlRequest();
+            }
         }
         
         curl_close($_curl);
@@ -177,34 +188,45 @@ class Http_Client
     public function _checkvalidResponse($curl, $response)
     {
         $this->_sessionCount ++;
-
+        
         // Max Repeat-Count
         if ( $this->_sessionCount > $this->_maxSessionCount ) {
             // break, while Max-Count
-            $this->_lastResponseStrate = true;
+            $this->_lastResponseState = true;
+            return;
         }
 
         // Empty Response
         if ( !strlen($response) ) {
-            $this->_lastResponseStrate = false;
+            $this->_lastResponseState = false;
+            return;
+        }
+        
+        // Session is expired
+        if ( strpos($response, $this->_errorString) !== false ) {
+            $this->_lastResponseState = false;
+            return;
         }
         
         // No-Error-String in Response
         if ( strpos($response, $this->_checkValifResponse) === false ) {
-            $this->_lastResponseStrate = false;
+            $this->_lastResponseState = false;
+            return;
         }
         
         // cUrl responde not HTMP-Code 200
         if ( curl_getinfo($curl, CURLINFO_RESPONSE_CODE) != 200 ) {
-            $this->_lastResponseStrate = false;
+            $this->_lastResponseState = false;
+            return;
         }
         
         // cUrl send Conncetion-Error
         if ( curl_getinfo($curl, CURLINFO_HTTP_CONNECTCODE) != 0 ) {
-            $this->_lastResponseStrate = false;
+            $this->_lastResponseState = false;
+            return;
         }
         
-        $this->_lastResponseStrate = true;
+        $this->_lastResponseState = true;
     }
     
     /**

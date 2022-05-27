@@ -80,7 +80,7 @@ class Envertech_Session
     {
         $this->setUsername(Username);
         $this->setPassword(Password);
-        
+
         $this->logoutEnvertechSession();
         $this->startEnvertechSession();
     }
@@ -132,7 +132,7 @@ class Envertech_Session
                'url'    => 'https://www.envertecportal.com/apiaccount/login',
                'from'   => 'https://www.envertecportal.com/',
                'host'   => 'www.envertecportal.com',
-               'app'    => 'apiaccount/login',
+               'app'    => '/apiaccount/login',
                'params' => array(
                    'userName' => $this->getConfig()->getData()['username'],
                    'pwd'      => $this->getConfig()->getData()['password']
@@ -157,12 +157,12 @@ class Envertech_Session
                'url'    => 'https://www.envertecportal.com/apiAccount/Logout',
                'from'   => 'https://www.envertecportal.com/',
                'host'   => 'www.envertecportal.com',
-               'app'    => 'apiAccount/Logout',
+               'app'    => '/apiAccount/Logout',
                'params' => array(
                )
            )
         );
-        $curl->sendCurlRequest();
+        $curl->sendCurlRequest(false);
 
         if ( is_null($sessionFile) ) {
             $sessionFile = $this->getConfig()->getOptions()->getData()['session'] . DS .
@@ -170,7 +170,12 @@ class Envertech_Session
         }
 
         if ( is_file($sessionFile) ) {
-            unlink($sessionFile);
+            if ( !unlink($sessionFile) ) {
+                trigger_error("Session-File not deleted\n" . $sessionFile , E_USER_ERROR);
+            }
+        }
+        else {
+            trigger_error("Session-File not found\n" . $sessionFile , E_USER_ERROR);
         }
     }
 }
