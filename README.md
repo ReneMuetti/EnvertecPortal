@@ -30,9 +30,9 @@ Bemerkung: Abfrage der Wechselrichter eines 1-Phasen-Systems<br/>
 /ApiStations/GetDevicesABC<br/>
 Model: Envertech/Devices<br/>
 Bemerkung: Abfrage der Wechselrichter eines 3-Phasen-Systems<br/>
-| Parameter | Richtung | single | three |
+| Parameter | Richtung | Info |
 | --- | --- | --- |
-| setPhaseMode | Model | 32 Stellen |
+| setPhaseMode | Model | single/three |
 | stationId | Senden | 32 Stellen |
 | Status | Empfang | 0: Ok; 1: Fehler |
 | Result | Empfang | null |
