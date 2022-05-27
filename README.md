@@ -1,8 +1,8 @@
 # EnvertecPortal
 Retrieve data of a PV plant from the EnvertecPortal and store locally
 
-/ApiStations/GetWayCount
-Model: Envertech/Gatways
+/ApiStations/GetWayCount<br/>
+Model: Envertech/Gatways<br/>
 Bemerkung: Anzeige alle hinterlegten Gayways
 | Parameter | Richtung | Info |
 | --- | --- | --- |
@@ -12,8 +12,8 @@ Bemerkung: Anzeige alle hinterlegten Gayways
 | Data | Empfang | Object |
 | Data->GATEWAYNS | Empfang | 8 Stellen) |
 
-/ApiStations/GetDevices
-Model: Envertech/Devices
+/ApiStations/GetDevices<br/>
+Model: Envertech/Devices<br/>
 Bemerkung: Abfrage der Wechselrichter eines 1-Phasen-Systems
 | Parameter | Richtung | Info |
 | --- | --- | --- |
@@ -27,8 +27,8 @@ Bemerkung: Abfrage der Wechselrichter eines 1-Phasen-Systems
 | Data->Invs->SN | Empfang | Serial des Wechselrichter |
 | Data->Invs->Alias | Empfang | Alias des Wechselrichter |
 
-/ApiStations/GetDevicesABC
-Model: Envertech/Devices
+/ApiStations/GetDevicesABC<br/>
+Model: Envertech/Devices<br/>
 Bemerkung: Abfrage der Wechselrichter eines 3-Phasen-Systems
 | Parameter | Richtung | single | three |
 | --- | --- | --- |
@@ -48,8 +48,8 @@ Bemerkung: Abfrage der Wechselrichter eines 3-Phasen-Systems
 | Data->InvsCC->SN | Empfang | Serial des Wechselrichter |
 | Data->InvsCC->Alias | Empfang | Alias des Wechselrichter |
 
-/ApiStations/GetSunNavStationList
-Model: Envertech/Station
+/ApiStations/GetSunNavStationList<br/>
+Model: Envertech/Station<br/>
 Bemerkung: Bezeichner der eingetragenen Stations-Listen (nur für Envertec-Portal)
 | Parameter | Richtung | Info |
 | --- | --- | --- |
@@ -61,8 +61,8 @@ Bemerkung: Bezeichner der eingetragenen Stations-Listen (nur für Envertec-Porta
 | Data->Val | Empfang | ID der Station |
 | Data->Selected | Empfang | Ist die Station gerade aktiv |
 
-/ApiStations/getStationInfo
-Model: Envertech/StationInfo
+/ApiStations/getStationInfo<br/>
+Model: Envertech/StationInfo<br/>
 Bemerkung: Ermittelt alle aktuellen Daten der gewählten Station
 | Parameter | Richtung | Info |
 | --- | --- | --- |
