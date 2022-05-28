@@ -10,7 +10,7 @@ Bemerkung: Anzeige alle hinterlegten Gayways<br/>
 | Status | Empfang | 0: Ok; 1: Fehler |
 | Result | Empfang | null |
 | Data | Empfang | Object |
-| Data->GATEWAYNS | Empfang | 8 Stellen) |
+| Data->GATEWAYNS | Empfang | 8 Stellen |
 
 /ApiStations/GetDevices<br/>
 Model: Envertech/Devices<br/>
@@ -71,16 +71,16 @@ Bemerkung: Ermittelt alle aktuellen Daten der gewählten Station<br/>
 | Result | Empfang | null |
 | Data | Empfang | Object |
 | Data->UnitCapacity | Empfang | Kapazität des aktuellen Wechselrichters |
-| Data->UnitEToday | Empfang | Einspeisung heutige (in KWh) |
-| Data->UnitEMonth | Empfang | Einspeisung laufender Monat (in KWh) |
-| Data->UnitEYear | Empfang | Einspeisung laufendes Jahr (in KWh) |
-| Data->UnitETotal | Empfang | Gesamte aufgezeichntete Produktion (in KWh) |
-| Data->Power | Empfang | aktuell erzeugte Leistung (in Watt) |
-| Data->PowerStr | Empfang | Data->Power mit Einheit |
-| Data->Capacity | Empfang | maximale Leistung |
-| Data->StrCO2 | Empfang | Eingesparte CO2-Menge (in Tonnen) |
+| Data->UnitEToday | Empfang | Einspeisung heute (in KWh mit Einheit) |
+| Data->UnitEMonth | Empfang | Einspeisung laufender Monat (in KWh mit Einheit) |
+| Data->UnitEYear | Empfang | Einspeisung laufendes Jahr (in KWh mit Einheit) |
+| Data->UnitETotal | Empfang | Gesamte aufgezeichntete Produktion (in KWh mit Einheit) |
+| Data->Power | Empfang | aktuell erzeugte Leistung (in Watt ohne Einheit) |
+| Data->PowerStr | Empfang | Data->Power (mit Einheit) |
+| Data->Capacity | Empfang | maximale Leistung (ohne Einheit) |
+| Data->StrCO2 | Empfang | Eingesparte CO2-Menge (in Tonnen mit Einheit) |
 | Data->StrTrees | Empfang | Errechneter Wert für gepflanzte Bäume |
-| Data->StrIncome | Empfang | Errechnete Einspeisevergütung |
+| Data->StrIncome | Empfang | Errechnete Einspeisevergütung (mit Einheit) |
 | Data->PwImg | Empfang | Bild-Datei |
 | Data->StationName | Empfang | Name der Station |
 | Data->Lat | Empfang | GEO-Koordinaten |
@@ -88,8 +88,41 @@ Bemerkung: Ermittelt alle aktuellen Daten der gewählten Station<br/>
 | Data->TimeZone | Empfang | Zeitzohnenverschiebung |
 | Data->StrPeakPower | Empfang | höchster erzeugter Leistungswert (mit Einheit) |
 | Data->Installer | Empfang | NULL |
-| Data->CreateTime | Empfang | Datum der Account-Erstellung mit Zeitzohnenverschiebung |
+| Data->CreateTime | Empfang | Datum der Account-Erstellung (mit Zeitzohnenverschiebung) |
 | Data->CreateYear | Empfang | Jahr der Account-Erstellung |
 | Data->CreateMonth | Empfang | Monat der Account-Erstellung |
-| Data->Etoday | Empfang |  |
+| Data->Etoday | Empfang | heitige Energieproduktion (ohne Einheit) |
 | Data->InvTotal | Empfang | Gesamtanzahl aller Wechselrichter |
+
+/ApiInverters/QueryTerminalReal<br/>
+Model: Envertech/TerminalReal<br/>
+Bemerkung: Echtzeitabfrage der aktuellen Energiedaten (alle Parameter werden HTML-Encodet gesendet)
+| Parameter | Richtung | Info |
+| --- | --- | --- |
+| STATIONID | Model | 32 Stellen (Pflicht) |
+| GATEWAYALIAS | Model | 8 Stellen (Optional) |
+| SNALIAS | Model | 8 Stellen (Optional) |
+| Status | Empfang | 0: Ok; 1: Fehler |
+| Result | Empfang | null |
+| Data | Empfang | Object |
+| Data->PageNumber | Empfang | Seitenzahl (bei vielen Einträgen) |
+| Data->PerPage | Empfang | Anzahl der Einträge je Seite |
+| Data->TotalPage | Empfang | Gesamtanzahl aller Seiten |
+| Data->Lan | Empfang | Sprache / Codierung |
+| Data->QueryResults | Empfang | Array mit Daten für alle Phasen / Gateways |
+| Data->QueryResults->GATEWAYALIAS | Empfang | Alias für Gateway |
+| Data->QueryResults->GATEWAYSN | Empfang | 8 Stellen |
+| Data->QueryResults->SNALIAS | Empfang | Alias für Wechselrichter |
+| Data->QueryResults->SN | Empfang | 8 Stellen |
+| Data->QueryResults->DCVOLTAGE | Empfang | DC-Eingang :: Spannung (V ohne Einheit) |
+| Data->QueryResults->ACVOLTAGE | Empfang | AC Ausgang :: Spannung (V ohne Einheit) |
+| Data->QueryResults->ACCURRENCY | Empfang |  |
+| Data->QueryResults->POWER | Empfang | AC Ausgang :: erzeugte Leistung (in Watt ohne Einheit) |
+| Data->QueryResults->FREQUENCY | Empfang | AC Ausgang :: ktuelle Netzfrequenz (ohne Einheit) |
+| Data->QueryResults->DAYENERGY | Empfang | Einspeisung heutige (kWh ohne Einheit) |
+| Data->QueryResults->ENERGY | Empfang | Gesamtenergie (kWh ohne Einheit) |
+| Data->QueryResults->TEMPERATURE | Empfang | Temperatur (°C ohne Einheit) |
+| Data->QueryResults->SITETIME | Empfang | Zeitstempel der letzten Aktualisierung (AM/PM ohne Zeitzohnenverschiebung) |
+| Data->QueryResults->STATIONID | Empfang |  |
+| Data->QueryResults->STATUS | Empfang | Fehlercode (0 = Online) |
+| Data->QueryResults->SNID | Empfang | Wechselrichter-ID |
