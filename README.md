@@ -126,3 +126,124 @@ Bemerkung: Echtzeitabfrage der aktuellen Energiedaten (alle Parameter werden HTM
 | Data->QueryResults->STATIONID | Empfang |  |
 | Data->QueryResults->STATUS | Empfang | Fehlercode (0 = Online) |
 | Data->QueryResults->SNID | Empfang | Wechselrichter-ID |
+
+/ApiStations/GetEnergyChartData<br/>
+Model: Envertech/Chart_Energy<br/>
+Bemerkung: Datenhistory für einen Monat innerhalb eines Jahres
+| Parameter | Richtung | Info |
+| --- | --- | --- |
+| stationId | Model | 32 Stellen (Pflicht) |
+| year | Model | 4 Stellen (Pflicht) |
+| month | Model | 2 Stellen (Pflicht) |
+| chartType | Model | Anzeige-Modus |
+| Status | Empfang | 0: Ok; 1: Fehler |
+| Result | Empfang | null |
+| Data | Empfang | Object/array |
+| Data->xAxis | Empfang | Datumsangabe |
+| Data->yAxis | Empfang | Tagesenergie (kWh ohne Einheit) |
+
+/ApiStations/GetDayPowerChartDate<br/>
+Model: Envertech/Chart_DayPower<br/>
+Bemerkung: Datenhistory für einen speziellen Tag im Monat innerhalb eines Jahres (Datenflow alle 5 Minunten)
+| Parameter | Richtung | Info |
+| --- | --- | --- |
+| stationId | Model | 32 Stellen (Pflicht) |
+| date | Model | 10 Stellen (Pflicht) |
+| chartType | Model | Anzeige-Modus |
+| Status | Empfang | 0: Ok; 1: Fehler |
+| Result | Empfang | null |
+| Data | Empfang | Object/array |
+| Data->DateTime | Empfang | Datum-Zait-Angabe (ohne Zeitzohnenverschiebung) |
+| Data->yAxis | Empfang | produzierte Energie (kWh ohne Einheit) |
+
+/ApiStations/GetHistoryChartData<br/>
+Model: Envertech/Chart_History<br/>
+Bemerkung: Datenhistory für einen speziellen Tag im Monat innerhalb eines Jahres (Datenflow alle 3 Minunten)
+| Parameter | Richtung | Info |
+| --- | --- | --- |
+| stationId | Model | 32 Stellen (Pflicht) |
+| date | Model | 10 Stellen (Pflicht) |
+| gatewaySN | Model | 8 Stellen (Pflicht) |
+| sn | Model | 8 Stellen (Pflicht) |
+| date | Model | 10 Stellen (Pflicht) |
+| dateType | Model | History-Typ (Pflicht) |
+| field | Model | Datenfeld innerhalb des Portal |
+| Status | Empfang | 0: Ok; 1: Fehler |
+| Result | Empfang | null |
+| Data | Empfang | Object/array |
+| Data->powers | Empfang | array mit Energie-Angaben eines Zeitstempels (ohne Einheit) |
+| Data->frequency | Empfang | array mit Netzfreqzenzen eines Zeitstempels (ohne Einheit) |
+| Data->energy | Empfang | array mit Energieproduktion eines Zeitstempels (ohne Einheit) |
+| Data->temperature | Empfang | array mit Themperatur-Angaben eines Zeitstempels (ohne Einheit) |
+| Data->dcvoltage | Empfang | array mit DC-Eingang-Spannung eines Zeitstempels (ohne Einheit) |
+| Data->acvoltage | Empfang | array mit AC Ausgang-Spannung eines Zeitstempels (ohne Einheit) |
+| Data->sitetime | Empfang | array mit Zeitstempeln |
+
+/ApiReport/PreviewDailyReport<br/>
+Model: Envertech/Preview_DailyReport<br/>
+Bemerkung: Datenübersicht für einen speziellen Tag im Monat innerhalb eines Jahres (Datenflow alle 2 Minunten)
+Hinweis: Der ApiReport ist sehr instabil, was die Session angeht; Eventuell Session vorher löschen (nicht für periodische Abfragen geeignet)
+| Parameter | Richtung | Info |
+| --- | --- | --- |
+| stationId | Model | 32 Stellen (Pflicht) |
+| date | Model | 10 Stellen (Pflicht) |
+| sn | Model | 8 Stellen (Pflicht) |
+| field | Model | Datenfeld innerhalb des Portal |
+| Status | Empfang | 0: Ok; 1: Fehler |
+| Result | Empfang | null |
+| Data | Empfang | Object/array |
+| Data->StationName | Empfang | Name der Station |
+| Data->EToday | Empfang | Tages-Energieproduktion (ohne Einheit) |
+| Data->ETotal | Empfang | Gesammt-Energieproduktion (ohne Einheit) |
+| Data->Capacity | Empfang | Kapazität der Wechselrichter |
+| Data->Date | Empfang | Datumsangabe |
+| Data->ListSN | Empfang | Object |
+| Data->ListSN->SN | Empfang | 8 Stellen |
+| Data->ListSN->PV | Empfang | DC Eingang-Spannung zu diesem Zeitstempel (ohne Einheit) |
+| Data->ListSN->Vac | Empfang | AC Ausgang-Spannung zu diesem Zeitstempel (ohne Einheit) |
+| Data->ListSN->Power | Empfang | produzierte Leistung zu diesem Zeitstempel (ohne Einheit) |
+| Data->ListSN->Frq | Empfang |  Netzfreqzenzen zu diesem Zeitstempel (ohne Einheit) |
+| Data->ListSN->Temperature | Empfang | Themperatur-Angaben zu diesem Zeitstempel (ohne Einheit) |
+| Data->ListSN->UpdateTime | Empfang | Datum-Zeit-Angabe |
+| Data->ListSN->ETotal | Empfang | Gesamt-Produktion zu diesem Zeitstempel (ohne Einheit) |
+
+/ApiReport/PreviewMonthReport
+Model: Envertech/Preview_MonthReport<br/>
+Bemerkung: Datenübersicht für einen speziellen Monat innerhalb eines Jahres
+Hinweis: Der ApiReport ist sehr instabil, was die Session angeht; Eventuell Session vorher löschen (nicht für periodische Abfragen geeignet)
+| Parameter | Richtung | Info |
+| --- | --- | --- |
+| stationId | Model | 32 Stellen (Pflicht) |
+| date | Model | 7 Stellen (Pflicht) |
+| Status | Empfang | 0: Ok; 1: Fehler |
+| Result | Empfang | null |
+| Data | Empfang | Object/array |
+| Data->StationName | Empfang | Name der Station |
+| Data->EMonth | Empfang | Monats-Energieproduktion (ohne Einheit) |
+| Data->ETotal | Empfang | Gesammt-Energieproduktion (ohne Einheit) |
+| Data->Capacity | Empfang | Kapazität der Wechselrichter |
+| Data->Date | Empfang | Datumsangabe |
+| Data->ListItem | Empfang | Object |
+| Data->ListItem->DateTime | Empfang | Datum-Angabe |
+| Data->ListItem->Energy | Empfang |  produzierte Leistungs (ohne Einheit) |
+
+
+/ApiReport/PreviewYearReport
+Model: Envertech/Preview_YearReport<br/>
+Bemerkung: Datenübersicht für einen spezielles Jahr
+Hinweis: Der ApiReport ist sehr instabil, was die Session angeht; Eventuell Session vorher löschen (nicht für periodische Abfragen geeignet)
+| Parameter | Richtung | Info |
+| --- | --- | --- |
+| stationId | Model | 32 Stellen (Pflicht) |
+| date | Model | 4 Stellen (Pflicht) |
+| Status | Empfang | 0: Ok; 1: Fehler |
+| Result | Empfang | null |
+| Data | Empfang | Object/array |
+| Data->StationName | Empfang | Name der Station |
+| Data->EYear | Empfang | Jahres-Energieproduktion (ohne Einheit) |
+| Data->ETotal | Empfang | Gesammt-Energieproduktion (ohne Einheit) |
+| Data->Capacity | Empfang | Kapazität der Wechselrichter |
+| Data->Date | Empfang | Datumsangabe |
+| Data->ListItem | Empfang | Object |
+| Data->ListItem->DateTime | Empfang | Datum-Angabe |
+| Data->ListItem->Energy | Empfang |  produzierte Leistungs (ohne Einheit) |
