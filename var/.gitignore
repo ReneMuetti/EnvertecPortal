@@ -1,4 +1,7 @@
 *
 .*
 !.htaccess
+!.placeholder
 !.gitignore
+!log
+!session

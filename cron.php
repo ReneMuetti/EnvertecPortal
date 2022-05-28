@@ -1,19 +1,18 @@
 <?php
 ini_set('display_errors', 1);
 
-include_once realpath('./includes/config.php');
 include_once realpath('./includes/global.php');
 
 $session = Portal::getModel('Envertech/Session');
 $session->setUsername(Username)->setPassword(Password);
 
 if ( $session->startEnvertechSession() ) {
-    echo "Session: ok\n" . date("d.m.Y H:i:s") . "\n";
+    echo date("d.m.Y H:i:s") . " :: Session: ok\n";
     
     //echo "\n-------------------------------------\n";
     //$apiSession = Portal::getModel('Envertech/ApiAccount_SessionUser');
     //var_dump( $apiSession->sendRequest() );
-
+    
     //echo "\n-------------------------------------\n";
     //$stationId = Portal::getModel('Envertech/StationId');
     //var_dump( $stationId->sendRequest() );
@@ -76,11 +75,10 @@ if ( $session->startEnvertechSession() ) {
     //$reportYear->setYear('2022');
     //$reportYear->setYear(date('Y'));
     //var_dump( $reportYear->sendRequest() );
-
-
-    echo "\n-------------------------------------\n";
-    echo "Ready";
 }
 else {
-    echo 'Session failed';
+    echo date("d.m.Y H:i:s") . " :: Session failed\n";
 }
+
+echo "\n-------------------------------------\n";
+echo "Ready";

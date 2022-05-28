@@ -84,14 +84,22 @@ class Envertech_Session
         $this->logoutEnvertechSession();
         $this->startEnvertechSession();
     }
+    
+    /**
+     * get current Session-File with full path
+     */
+    public function getSessionFile()
+    {
+        return $this->getConfig()->getOptions()->getData()['session'] . DS .
+               $this->getConfig()->getData()['session'];
+    }
 
     /**
      * Alter der aktuellen Session prüfen
      */
     public function checkCurrentSessionState()
     {
-        $_sessionFile = $this->getConfig()->getOptions()->getData()['session'] . DS .
-                        $this->getConfig()->getData()['session'];
+        $_sessionFile = $this->getSessionFile();
         
         if ( is_file($_sessionFile) ) {
             $stat = stat($_sessionFile);
@@ -120,12 +128,14 @@ class Envertech_Session
      */
     public function startEnvertechSession()
     {
+        $_sessionFile = $this->getSessionFile();
+
         if ( $this->checkCurrentSessionState() ) {
             // Session ist 24h gültig
             // nach 23h wird ausgeloggt und neu angemeldet
             return true;
         }
-        
+
         $curl = Portal::getModel('Http/Client');
         $curl ->setOptions(
            array(
@@ -139,17 +149,15 @@ class Envertech_Session
                )
            )
        );
-       $result = $curl->sendCurlRequest();
+       $result = $curl->sendCurlRequest(false);
 
-       return is_file( $this->getConfig()->getOptions()->getData()['session'] . DS . $this->getConfig()->getData()['session'] );
+       return is_file( $_sessionFile );
     }
     
     /**
      * Logout current Session
-     *
-     * @param string $sessionFile
      */
-    public function logoutEnvertechSession($sessionFile = null)
+    public function logoutEnvertechSession()
     {
         $curl = Portal::getModel('Http/Client');
         $curl ->setOptions(
@@ -164,13 +172,24 @@ class Envertech_Session
         );
         $curl->sendCurlRequest(false);
 
+        $this->deleteSessionFile();
+    }
+    
+    /**
+     * Delete current Session-File
+     *
+     * @param string $sessionFile
+     */
+    public function deleteSessionFile($sessionFile = null)
+    {
         if ( is_null($sessionFile) ) {
-            $sessionFile = $this->getConfig()->getOptions()->getData()['session'] . DS .
-                           $this->getConfig()->getData()['session'];
+            $sessionFile = $this->getSessionFile();
         }
 
         if ( is_file($sessionFile) ) {
-            if ( !unlink($sessionFile) ) {
+            $state = unlink($sessionFile);
+
+            if ( $state === false ) {
                 trigger_error("Session-File not deleted\n" . $sessionFile , E_USER_ERROR);
             }
         }

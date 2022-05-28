@@ -128,7 +128,7 @@ class Http_Client
     public function sendCurlRequest($checkResponse = true)
     {
         global $session;
-        
+ 
         $_curl = curl_init();
         $_data = $this->_getFiledData();
         $_sessionFile = $this->getConfig()->getOptions()->getData()['session'] . DS . $session->getConfig()->getData()['session'];
@@ -158,16 +158,19 @@ class Http_Client
         ));
         
         curl_setopt($_curl, CURLOPT_POSTFIELDS, $_data);
-        
+
         $response = curl_exec($_curl);
         
         if ( $checkResponse === true ) {
             $this->_checkvalidResponse($_curl, $response);
-            
+
             if ( $this->_lastResponseState === false ) {
                 curl_close($_curl);
+                
+                if ( get_class($session) != 'Envertech_Session' ) {
+                    $session = Portal::getModel('Envertech/Session');
+                }
 
-                $session = Portal::getModel('Envertech/Session');
                 $session->renewEnvertechSession();
                 $this->sendCurlRequest();
             }
@@ -188,10 +191,9 @@ class Http_Client
     public function _checkvalidResponse($curl, $response)
     {
         $this->_sessionCount ++;
-        
+
         // Max Repeat-Count
         if ( $this->_sessionCount > $this->_maxSessionCount ) {
-            // break, while Max-Count
             $this->_lastResponseState = true;
             return;
         }
@@ -209,7 +211,7 @@ class Http_Client
         }
         
         // No-Error-String in Response
-        if ( strpos($response, $this->_checkValifResponse) === false ) {
+        if ( strpos($response, $this->_checkValifResponse) !== false ) {
             $this->_lastResponseState = false;
             return;
         }
