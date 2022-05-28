@@ -207,7 +207,7 @@ Hinweis: Der ApiReport ist sehr instabil, was die Session angeht; Eventuell Sess
 | Data->ListSN->UpdateTime | Empfang | Datum-Zeit-Angabe |
 | Data->ListSN->ETotal | Empfang | Gesamt-Produktion zu diesem Zeitstempel (ohne Einheit) |
 
-/ApiReport/PreviewMonthReport
+/ApiReport/PreviewMonthReport<br/>
 Model: Envertech/Preview_MonthReport<br/>
 Bemerkung: Datenübersicht für einen speziellen Monat innerhalb eines Jahres
 Hinweis: Der ApiReport ist sehr instabil, was die Session angeht; Eventuell Session vorher löschen (nicht für periodische Abfragen geeignet)
@@ -228,7 +228,7 @@ Hinweis: Der ApiReport ist sehr instabil, was die Session angeht; Eventuell Sess
 | Data->ListItem->Energy | Empfang |  produzierte Leistungs (ohne Einheit) |
 
 
-/ApiReport/PreviewYearReport
+/ApiReport/PreviewYearReport<br/>
 Model: Envertech/Preview_YearReport<br/>
 Bemerkung: Datenübersicht für einen spezielles Jahr
 Hinweis: Der ApiReport ist sehr instabil, was die Session angeht; Eventuell Session vorher löschen (nicht für periodische Abfragen geeignet)
