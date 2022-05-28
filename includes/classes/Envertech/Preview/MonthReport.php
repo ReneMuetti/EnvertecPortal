@@ -38,6 +38,10 @@ class Envertech_Preview_MonthReport
      */
     public function sendRequest()
     {
+        global $session;
+        
+        $session->deleteSessionFile();
+        
         $curl = Portal::getModel('Http/Client');
         $curl ->setOptions(
                    array(
